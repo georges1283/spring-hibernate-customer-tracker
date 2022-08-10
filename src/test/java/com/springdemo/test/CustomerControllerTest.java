@@ -2,6 +2,7 @@ package com.springdemo.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -30,7 +31,7 @@ public class CustomerControllerTest {
 	@InjectMocks
 	CustomerController customerController;
 	
-	@InjectMocks
+	@Mock
 	CustomerServiceImpl customerService;
 
 	@Mock
@@ -49,7 +50,7 @@ public class CustomerControllerTest {
         // when
 		List<Customer> result = customerService.getCustomers(sort);
 		
-		when(customerService.getCustomers(sort)).thenReturn(Arrays.asList(customer1, customer2));
+//		when(customerService.getCustomers(eq(sort))).thenReturn(Arrays.asList(customer1, customer2));
 		
 		// then
         assertThat(result.size()).isEqualTo(2);
