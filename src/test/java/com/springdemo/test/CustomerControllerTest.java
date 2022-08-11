@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -50,14 +51,20 @@ public class CustomerControllerTest {
 		Customer customer1 = new Customer(1, "Test", "Tester", "Testing@gmail.com");
 		Customer customer2 = new Customer(2, "Test", "Gussin", "example@gmail.com");
 		List<Customer> customers = Arrays.asList(customer1, customer2);
-		theModel.addAttribute("customers", customer1);
-		theModel.addAttribute("customers", customer2);
-
+		//theModel.addAttribute("customers", customer1);
+		//theModel.addAttribute("customers", customer2);
 		String sort = "0";
+		when(customerService.getCustomers(eq(Integer.parseInt(sort)))).thenReturn(customers);
+
+
 		// when
 		String responseEntity = customerController.listCustomers(theModel, sort);
 
+		verify(customerService).getCustomers(eq(Integer.parseInt(sort)));
+		verify(theModel).addAttribute(eq("customers"), eq(customers));
+
 		assertEquals(responseEntity, "list-customers");
+
 
 	}
 
